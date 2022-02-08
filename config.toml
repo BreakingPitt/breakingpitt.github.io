@@ -11,6 +11,10 @@ publishDir = "docs/"
 googleAnalytics = ""
 disqusShortname = "yourdiscussshortname"
 
+[module]
+[[module.imports]]
+  path = 'github.com/Fastbyte01/KeepIt.git'
+
 [sitemap]
   changefreq = "monthly"
   filename = "sitemap.xml"
