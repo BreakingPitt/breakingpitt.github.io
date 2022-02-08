@@ -1,0 +1,237 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="chrome=1">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=robots content="noodp">
+<link rel=canonical href=https://breakingpitt.github.io/2022/cloudquery000/>
+<link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/site.webmanifest>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<meta name=msapplication-TileColor content="#da532c">
+<meta name=theme-color content="#ffffff">
+<title>
+Cloudquery - Getting Started | BreakingPitt
+</title>
+<meta name=title content="Cloudquery - Getting Started | BreakingPitt">
+<link rel=stylesheet href=/font/iconfont.css>
+<link rel=stylesheet href=/css/main.min.css>
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Cloudquery - Getting Started">
+<meta name=twitter:description content="What is CloudQuery? CloudQuery is a powerful tool that allows us to extract, normalize, expose and export the configuration and metadata of infrastructure resources deployed in different cloud computing providers.
+The result of the operations performed by CloudQUery is stored in a Postgres database, allowing us to write SQL queries to facilitate monitoring, governance and security.
+To do so, CloudQuery abstracts different APIs that allow us to define security, governance, cost and SQL compliance policies.">
+<script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Cloudquery - Getting Started","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/breakingpitt.github.io\/2022\/cloudquery000\/"},"image":{"@type":"ImageObject","url":"https:\/\/breakingpitt.github.io\/cover.png","width":800,"height":600},"genre":"posts","wordcount":887,"url":"https:\/\/breakingpitt.github.io\/2022\/cloudquery000\/","datePublished":"2022-02-08T08:06:15\u002b00:00","dateModified":"2022-02-08T08:06:15\u002b00:00","publisher":{"@type":"Organization","name":"Pedro Garcia Rodrigue","logo":{"@type":"ImageObject","url":"https:\/\/breakingpitt.github.io\/logo.png","width":127,"height":40}},"author":{"@type":"Person","name":"Pedro Garcia Rodriguez"},"description":""}</script>
+</head>
+<body>
+<div class=wrapper>
+<nav class=navbar>
+<div class=container>
+<div class="navbar-header header-logo">
+<a href=https://breakingpitt.github.io>BreakingPitt</a>
+</div>
+<div class="menu navbar-right">
+<a class=menu-item href=/posts/ title>Blog</a>
+<a class=menu-item href=/about title>About</a>
+<a href=javascript:void(0); class=theme-switch><i class="iconfont icon-sun"></i></a>&nbsp;
+</div>
+</div>
+</nav>
+<nav class=navbar-mobile id=nav-mobile style=display:none>
+<div class=container>
+<div class=navbar-header>
+<div> <a href=javascript:void(0); class=theme-switch><i class="iconfont icon-sun"></i></a>&nbsp;<a href=https://breakingpitt.github.io>BreakingPitt</a></div>
+<div class=menu-toggle>
+<span></span><span></span><span></span>
+</div>
+</div>
+<div class=menu id=mobile-menu>
+<a class=menu-item href=/posts/ title>Blog</a>
+<a class=menu-item href=/about title>About</a>
+</div>
+</div>
+</nav>
+<main class=main>
+<div class=container>
+<article class=post-warp>
+<header class=post-header>
+<h1 class=post-title>Cloudquery - Getting Started</h1>
+<div class=post-meta>
+Written by <a href=https://breakingpitt.github.io rel=author>Pedro Garcia Rodriguez</a> with ♥
+<span class=post-time>
+on <time datetime=2022-02-08>8 February 2022</time>
+</span>
+in
+<i class="iconfont icon-timer"></i>
+5 min
+</div>
+</header>
+<div class=post-content>
+<h1 id=what-is-cloudquery>What is CloudQuery?</h1>
+<p>CloudQuery is a powerful tool that allows us to extract, normalize, expose and export the configuration and metadata of infrastructure resources deployed in different cloud computing providers.</p>
+<p>The result of the operations performed by CloudQUery is stored in a Postgres database, allowing us to write SQL queries to facilitate monitoring, governance and security.</p>
+<p>To do so, CloudQuery abstracts different APIs that allow us to define security, governance, cost and SQL compliance policies.</p>
+<h1 id=why-use-cloudquery>Why use CloudQuery?</h1>
+<p>CloudQuery gives unprecedented power and visibility to your cloud infrastructure and SaaS applications in a normalized way that is accessible with SQL in order to do security and compliance, cloud inventory, asset managementc and auditing tasks.</p>
+<h1 id=getting-started>Getting started.</h1>
+<h2 id=download-and-install>Download and install.</h2>
+<p>You can download the precompiled binary from releases, or using HomeBrew.</p>
+<h3 id=osx>OSX.</h3>
+<pre tabindex=0><code>breaking_pitt@Converge~ curl -L https://github.com/cloudquery/cloudquery/releases/latest/download/cloudquery_darwin_x86_64 -o cloudquery
+breaking_pitt@Converge~ chmod a+x cloudquery
+</code></pre><h3 id=install-with-homebrew>Install with HomeBrew.</h3>
+<pre tabindex=0><code>breaking_pitt@Converge~ brew install cloudquery/tap/cloudquery
+</code></pre><h3 id=check-cloudquery-install>Check CloudQuery install.</h3>
+<p>You can check if the binary has been installed correctly, running the following command:</p>
+<pre tabindex=0><code>breaking_pitt@Converge~ cloudquery --version
+cloudquery version 0.20.2
+</code></pre><h2 id=setup-postgresql-database>Setup PostgreSQL database.</h2>
+<p>As mentioned at the beginning of this article, the information retrieved by CloudQuery is exported to a Postgres database, so we are going to need one. The easiest way is to use a Docker container.</p>
+<pre tabindex=0><code>breaking_pitt@Converge~ mkdir -p cloudquery/test/db
+breaking_pitt@Converge~ docker run -d \
+                           --name cloudquery-db \
+                           -p 5432:5432 \
+                           -e POSTGRES_PASSWORD=cl09dqu3r13 \
+                           -e PGDATA=/var/lib/postgresql/data/pgdata \
+                           -v ~/cloudquery/test/db:/var/lib/postgresql/data \
+                           postgres
+</code></pre><h1 id=running-cloudquery>Running CloudQuery.</h1>
+<p>Now that we have the CloudQuery tool installed on your machine, create a directory and initialize the CloudqQuery configuration inside it, with the following command:</p>
+<pre tabindex=0><code>breaking_pitt@Converge~ mkdir -p cloudquery/test &amp;&amp; cd .cloudquery/test
+breaking_pitt@Converge~ cloudquery --no-telemetry init aws
+</code></pre><p>The init command will generate a config.hcl file that will describe which cloud provider we want to use and which resources we want CloudQuery to ETL. If we do not modify anything CloudQuery will bring all the resources of all the subscriptions to which have access.</p>
+<p>By default, CloudQuery connects to the PostgreSQL database that is defined in the config.hcl&rsquo;s connection section, as we&rsquo;ve changed the default database name in our PostgreSQL server set up, we must edit this section to configure the location and credentials of your postgres database.</p>
+<pre tabindex=0><code>cloudquery {
+  ...
+  ...
+
+  connection {
+    dsn = &quot;host=localhost user=postgres password=cl09dqu3r13 database=cloudquery-db port=5432&quot;
+  }
+}
+</code></pre><p>Now we have our project ready to retrieve the information of our subscriptions.</p>
+<h2 id=authenticating-with-aws>Authenticating with AWS.</h2>
+<p>CloudQuery needs to be authenticated with your AWS account in order to gather all the information about your cloud setup. There are multiple ways to authenticate with AWS, by default, CloudQuery respects the AWS credential provider chain. This means that CloudQuery will follow the following priorities when attempting to authenticate:</p>
+<ul>
+<li>Enviroment variables -> AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_SESSION_TOKEN.</li>
+<li>Configuration file -> Credentials and config files stored in ~/.aws folder.</li>
+<li>IAM roles for AWS compute resources..</li>
+</ul>
+<h2 id=gather-and-dump-data-into-postgresql-with-cloudquery>Gather and dump data into PostgreSQL with CloudQuery.</h2>
+<p>Once we have customized our <code>config.hcl</code> and we are authenticated with AWS, run the following command to fetch the resources.</p>
+<pre tabindex=0><code>breaking_pitt@Converge~ cloudquery fetch
+</code></pre><p>Once the process is finished, we can see that you have a bunch of tables generated. We can connect to our PostgreSQL server to check if CloudQuery found information about our cloud infrastructure.</p>
+<pre tabindex=0><code>breaking_pitt@Converge~ psql &quot;postgres://postgres:cl09dqu3r13@localhost:5432/cloudquery-db?sslmode=disable&quot;
+cloudquery-db=# \d
+postgres=# \d
+                                     List of relations
+ Schema |                              Name                              | Type  |  Owner
+--------+----------------------------------------------------------------+-------+----------
+ public | aws_access_analyzer_analyzer_finding_sources                   | table | postgres
+ public | aws_access_analyzer_analyzer_findings                          | table | postgres
+ public | aws_access_analyzer_analyzers                                  | table | postgres
+ public | aws_accounts                                                   | table | postgres
+ public | aws_acm_certificates                                           | table | postgres
+ public | aws_apigateway_api_keys                                        | table | postgres
+ public | aws_apigateway_client_certificates                             | table | postgres
+ public | aws_apigateway_domain_name_base_path_mappings                  | table | postgres
+ public | aws_apigateway_domain_names                                    | table | postgres
+ public | aws_apigateway_rest_api_authorizers                            | table | postgres
+ public | aws_apigateway_rest_api_deployments                            | table | postgres
+ public | aws_apigateway_rest_api_documentation_parts                    | table | postgres
+ public | aws_apigateway_rest_api_documentation_versions                 | table | postgres
+ public | aws_apigateway_rest_api_gateway_responses                      | table | postgres
+ public | aws_apigateway_rest_api_models                                 | table | postgres
+ public | aws_apigateway_rest_api_request_validators                     | table | postgres
+ public | aws_apigateway_rest_api_resources                              | table | postgres
+ public | aws_apigateway_rest_api_stages                                 | table | postgres
+ public | aws_apigateway_rest_apis                                       | table | postgres
+ ...
+</code></pre><h2 id=query-dumped-data>Query dumped data.</h2>
+<p>Now that the <code>cloudquery fetch</code> command dumped all the information about the infrastructure from our AWS account into our PostgreSQL server, we can start to get information about our infrastructure, for example:</p>
+<pre tabindex=0><code>cloudquery-db=# \d aws_ec2_vpcs;
+                 Table &quot;public.aws_ec2_vpcs&quot;
+      Column      |  Type   | Collation | Nullable | Default
+------------------+---------+-----------+----------+---------
+ cq_id            | uuid    |           | not null |
+ cq_meta          | jsonb   |           |          |
+ account_id       | text    |           | not null |
+ region           | text    |           |          |
+ arn              | text    |           |          |
+ cidr_block       | text    |           |          |
+ dhcp_options_id  | text    |           |          |
+ instance_tenancy | text    |           |          |
+ is_default       | boolean |           |          |
+ owner_id         | text    |           |          |
+ state            | text    |           |          |
+ tags             | jsonb   |           |          |
+ id               | text    |           | not null |
+Indexes:
+    &quot;aws_ec2_vpcs_pk&quot; PRIMARY KEY, btree (account_id, id)
+    &quot;aws_ec2_vpcs_cq_id_key&quot; UNIQUE CONSTRAINT, btree (cq_id)
+Referenced by:
+    TABLE &quot;aws_ec2_vpc_cidr_block_association_sets&quot; CONSTRAINT &quot;aws_ec2_vpc_cidr_block_association_sets_vpc_cq_id_fkey&quot; FOREIGN KEY (vpc_cq_id) REFERENCES aws_ec2_vpcs(cq_id) ON DELETE CASCADE
+    TABLE &quot;aws_ec2_vpc_ipv6_cidr_block_association_sets&quot; CONSTRAINT &quot;aws_ec2_vpc_ipv6_cidr_block_association_sets_vpc_cq_id_fkey&quot; FOREIGN KEY (vpc_cq_id) REFERENCES aws_ec2_vpcs(cq_id) ON DELETE CASCADE
+</code></pre><p>And run our queries:</p>
+<pre tabindex=0><code>cloudquery-db=# SELECT account_id, region, arn, cidr_block FROM aws_ec2_vpcs WHERE region='eu-west-1' AND is_default='t';
+  account_id  |  region   |                         arn                         |  cidr_block
+--------------+-----------+-----------------------------------------------------+---------------
+ 635811601642 | eu-west-1 | arn:aws:ec2:eu-west-1:635811601642:vpc/vpc-13db3b77 | 172.31.0.0/16
+</code></pre>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span>Author:</span>
+<span>Pedro Garcia Rodriguez </span>
+</p>
+<p class=copyright-item>
+<span>Words:</span>
+<span>887</span>
+</p>
+<p class=copyright-item>
+<span>Share:</span>
+<span>
+<a href="//twitter.com/share?url=https%3a%2f%2fbreakingpitt.github.io%2f2022%2fcloudquery000%2f&text=Cloudquery%20-%20Getting%20Started&via=xxxx" target=_blank title="Share on Twitter">
+<i class="iconfont icon-twitter"></i>
+</a>
+<a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fbreakingpitt.github.io%2f2022%2fcloudquery000%2f&title=Cloudquery%20-%20Getting%20Started" target=_blank title="Share on LinkedIn">
+<i class="iconfont icon-linkedin"></i>
+</a>
+</span>
+</p>
+<p class=copyright-item>
+Released under <a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a>
+</p>
+</div>
+<div class=post-tags>
+<section>
+<a href=javascript:window.history.back();>Back</a></span> ·
+<span><a href=https://breakingpitt.github.io>Home</a></span>
+</section>
+</div>
+<div class=post-nav>
+</div>
+<div class=post-comment>
+<div id=disqus_thread></div>
+<script type=text/javascript>(function(){var a,b;if(window.location.hostname=="localhost")return;a=document.createElement('script'),a.type='text/javascript',a.async=!0,b='yourdiscussshortname',a.src='//'+b+'.disqus.com/embed.js',(document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com/ class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+</article>
+</div>
+</main>
+<footer class=footer>
+<div class=copyright>
+&copy;
+<span itemprop=copyrightYear>2021 - 2022</span>
+<span class=author itemprop=copyrightHolder><a href=https://breakingpitt.github.io>Pedro Garcia Rodriguez</a> | </span>
+<span>Crafted with ❤️ by <a href=https://github.com/Fastbyte01/KeepIt target=_blank rel="external nofollow noopener noreffer">KeepIt</a> & <a href=https://gohugo.io/ target=_blank rel="external nofollow noopener noreffer">Hugo</a></span>
+</div>
+</footer>
+<script src=/js/vendor_no_gallery.min.js async></script>
+</div>
+</body>
+</html>
