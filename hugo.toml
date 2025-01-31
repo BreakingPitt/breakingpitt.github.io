@@ -1,0 +1,4 @@
+baseURL = 'https://www.pgarcia.es/'
+languageCode = 'en-us'
+theme = "archie"
+title = 'Pedro Garcia Rodriguez'

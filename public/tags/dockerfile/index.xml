@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dockerfile on Pedro Garcia Rodriguez</title>
+    <link>http://localhost:1313/tags/dockerfile/</link>
+    <description>Recent content in Dockerfile on Pedro Garcia Rodriguez</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 29 Jan 2025 18:55:48 +0100</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/dockerfile/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dockerfile Best Practices</title>
+      <link>http://localhost:1313/en/dockerfile-best-practices/</link>
+      <pubDate>Wed, 29 Jan 2025 18:55:48 +0100</pubDate>
+      <guid>http://localhost:1313/en/dockerfile-best-practices/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;In the dynamic and ever-evolving world of containerization, Dockerfiles are the cornerstone for building efficient and scalable Docker images. Writing these files involves understanding best practices to ensure optimal performance and simplified long-term maintenance.&lt;/p&gt;&#xA;&lt;p&gt;Dockerfiles serve as the blueprint for constructing efficient and scalable Docker images in the dynamic world of containerization. Mastering the art of crafting these files requires an understanding of best practices to ensure both optimal performance and maintainability. This article explores essential Dockerfile best practices, providing insights, examples, and practical tips to elevate your containerization experience.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
